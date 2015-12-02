@@ -5,17 +5,16 @@ import glob
 import os
 import sys
 
-import ah_bootstrap
 from setuptools import setup
 
-#A dirty hack to get around some early import/configurations ambiguities
+# A dirty hack to get around some early import/configurations ambiguities
 if sys.version_info[0] >= 3:
     import builtins
 else:
     import __builtin__ as builtins
 builtins._ASTROPY_SETUP_ = True
 
-from astropy_helpers.setup_helpers import (register_commands, adjust_compiler, 
+from astropy_helpers.setup_helpers import (register_commands, adjust_compiler,
                                            get_debug_option, get_package_info,
                                            add_command_option)
 from astropy_helpers.git_helpers import get_git_devstr
@@ -35,9 +34,9 @@ LICENSE = metadata.get('license', 'unknown')
 URL = metadata.get('url', 'http://astropy.org')
 
 # Get the long description from the package's docstring
-#__import__(PACKAGENAME)
-#package = sys.modules[PACKAGENAME]
-LONG_DESCRIPTION = "" #package.__doc__
+# __import__(PACKAGENAME)
+# package = sys.modules[PACKAGENAME]
+LONG_DESCRIPTION = ""  # package.__doc__
 
 # Store the package name in a built-in variable so it's easy
 # to get from other parts of the setup infrastructure
@@ -62,11 +61,14 @@ add_command_option('build', 'with-openmp', 'compile TARDIS without OpenMP',
                    is_bool=True)
 add_command_option('develop', 'with-openmp', 'compile TARDIS without OpenMP',
                    is_bool=True)
-add_command_option('install', 'with-vpacket-logging', 'compile TARDIS with virtual packet logging',
+add_command_option('install', 'with-vpacket-logging',
+                   'compile TARDIS with virtual packet logging',
                    is_bool=True)
-add_command_option('build', 'with-vpacket-logging', 'compile TARDIS with virtual packet logging',
+add_command_option('build', 'with-vpacket-logging',
+                   'compile TARDIS with virtual packet logging',
                    is_bool=True)
-add_command_option('develop', 'with-vpacket-logging', 'compile TARDIS with virtual packet logging',
+add_command_option('develop', 'with-vpacket-logging',
+                   'compile TARDIS with virtual packet logging',
                    is_bool=True)
 
 # Adjust the compiler in case the default on this platform is to use a
@@ -113,22 +115,22 @@ for root, dirs, files in os.walk(PACKAGENAME):
                     os.path.relpath(root, PACKAGENAME), filename))
 package_info['package_data'][PACKAGENAME].extend(c_files)
 
-setup(name=PACKAGENAME + '-sn',
-      version=VERSION,
-      description=DESCRIPTION,
-      scripts=scripts,
-      requires=['astropy'],
-      install_requires=['astropy'],
-      provides=[PACKAGENAME],
-      author=AUTHOR,
-      author_email=AUTHOR_EMAIL,
-      license=LICENSE,
-      url=URL,
-      long_description=LONG_DESCRIPTION,
-      cmdclass=cmdclassd,
-      zip_safe=False,
-      use_2to3=True,
-      entry_points=entry_points,
-      **package_info
+setup(
+    name=PACKAGENAME + '-sn',
+    version=VERSION,
+    description=DESCRIPTION,
+    scripts=scripts,
+    requires=['astropy'],
+    install_requires=['astropy'],
+    provides=[PACKAGENAME],
+    author=AUTHOR,
+    author_email=AUTHOR_EMAIL,
+    license=LICENSE,
+    url=URL,
+    long_description=LONG_DESCRIPTION,
+    cmdclass=cmdclassd,
+    zip_safe=False,
+    use_2to3=True,
+    entry_points=entry_points,
+    **package_info
 )
-
